@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UniversalRemote.Server.Loggers
+﻿namespace UniversalRemote.Server.Core.Loggers
 {
 	public interface ILogger
 	{

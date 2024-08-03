@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using UniversalRemote.Server.Loggers;
+﻿using UniversalRemote.Server.Core.Loggers;
 using WindowsInput;
 using WindowsInput.Native;
 
-namespace UniversalRemote.Server.Executers
+namespace UniversalRemote.Server.Core.Executers
 {
 	public class DirectInputExecuter : IExecuter
 	{
 		public ILogger Logger { get; }
-		private InputSimulator _sim = new InputSimulator();
+		private readonly InputSimulator _sim = new InputSimulator();
 
 		public DirectInputExecuter(ILogger logger)
 		{
@@ -36,7 +30,7 @@ namespace UniversalRemote.Server.Executers
 		{
 			var x = int.Parse(args[0]);
 			var y = int.Parse(args[1]);
-			_sim.Mouse.MoveMouseTo(x, y);
+			_sim.Mouse.MoveMouseToPositionOnVirtualDesktop(x, y);
 		}
 
 		public void ClickKey(string[] args)

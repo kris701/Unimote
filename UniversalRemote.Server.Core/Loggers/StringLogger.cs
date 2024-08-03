@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static UniversalRemote.Server.Loggers.ILogger;
+﻿using System.Text;
+using static UniversalRemote.Server.Core.Loggers.ILogger;
 
-namespace UniversalRemote.Server.Loggers
+namespace UniversalRemote.Server.Core.Loggers
 {
 	public class StringLogger : ILogger
 	{
-		private List<string> _logs = new List<string>();
+		private readonly List<string> _logs = new List<string>();
 		public void Log(string message, LogType type)
 		{
 			var logEntry = $"{DateTime.Now} : {GetLogPrefix(type)} : {message}";

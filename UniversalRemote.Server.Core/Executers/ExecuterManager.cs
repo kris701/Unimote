@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversalRemote.Server.Loggers;
+﻿using UniversalRemote.Server.Core.Loggers;
 
-namespace UniversalRemote.Server.Executers
+namespace UniversalRemote.Server.Core.Executers
 {
 	public class ExecuterManager
 	{
 		public ILogger Logger { get; set; }
 
-		private Dictionary<string, IExecuter> _executers = new Dictionary<string, IExecuter>();
+		private readonly Dictionary<string, IExecuter> _executers = new Dictionary<string, IExecuter>();
 
 		public ExecuterManager(ILogger logger)
 		{
