@@ -15,6 +15,7 @@ namespace UniversalRemote.Server.Core.Executers
 
 		public async Task Execute(string message)
 		{
+			Logger.Log($"Got input message: '{message}'", ILogger.LogType.Message);
 			try
 			{
 				var split = message.Split(';');
@@ -24,7 +25,7 @@ namespace UniversalRemote.Server.Core.Executers
 			}
 			catch (Exception ex)
 			{
-				Logger.Log($"Input message: {message}; Error: {ex.Message}", ILogger.LogType.Error);
+				Logger.Log($"Input message: '{message}'. Error: {ex.Message}", ILogger.LogType.Error);
 			}
 		}
 	}

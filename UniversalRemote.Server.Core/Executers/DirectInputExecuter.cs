@@ -1,6 +1,6 @@
-﻿using UniversalRemote.Server.Core.Loggers;
-using WindowsInput;
-using WindowsInput.Native;
+﻿using InputSimulatorStandard;
+using InputSimulatorStandard.Native;
+using UniversalRemote.Server.Core.Loggers;
 
 namespace UniversalRemote.Server.Core.Executers
 {
