@@ -2,7 +2,7 @@
 
 namespace UniversalRemote.Server.API.Models.DirectInput
 {
-	public class MoveMouseInput
+	public class MouseMoveInput
 	{
 		[Required]
 		[Range(0, 63000)]

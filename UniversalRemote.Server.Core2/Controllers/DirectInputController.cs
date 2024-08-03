@@ -1,4 +1,6 @@
 using InputSimulatorStandard;
+using InputSimulatorStandard.Native;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Mvc;
 using UniversalRemote.Server.API.Models.DirectInput;
 
@@ -16,11 +18,35 @@ namespace UniversalRemote.Server.API.Controllers
 			_logger = logger;
 		}
 
-		[HttpPost("move")]
-		public IActionResult MoveMouse([FromQuery] MoveMouseInput inputModel)
+		[HttpPost("mouse/move")]
+		public IActionResult MouseMove([FromQuery] MouseMoveInput inputModel)
 		{
-			_logger.LogWarning("test");
 			_sim.Mouse.MoveMouseToPositionOnVirtualDesktop((double)inputModel.X!, (double)inputModel.Y!);
+			return Ok();
+		}
+
+		[HttpPost("mouse/click")]
+		public IActionResult MouseClick([FromQuery] MouseClickInput inputModel)
+		{
+			switch (inputModel.Button)
+			{
+				case MouseClickInput.ButtonTypes.Left: _sim.Mouse.LeftButtonClick(); break;
+				case MouseClickInput.ButtonTypes.Right: _sim.Mouse.RightButtonClick(); break;
+			}
+			return Ok();
+		}
+
+		[HttpPost("keyboard/press")]
+		public IActionResult KeyboardPress([FromQuery] KeyboardPressInput inputModel)
+		{
+			_sim.Keyboard.KeyPress((VirtualKeyCode)inputModel.KeyCode);
+			return Ok();
+		}
+
+		[HttpPost("keyboard/text")]
+		public IActionResult KeyboardWriteText([FromQuery] KeyboardTextInput inputModel)
+		{
+			_sim.Keyboard.TextEntry(inputModel.Text);
 			return Ok();
 		}
 	}
