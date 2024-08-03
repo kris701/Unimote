@@ -1,26 +1,15 @@
 ﻿using System;
-using System.Net.Sockets;
-using System.Net;
-using WebSocketSharp;
-using WebSocketSharp.Server;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UniversalRemote.Server.Executers;
 using UniversalRemote.Server.Loggers;
+using WebSocketSharp.Server;
+using WebSocketSharp;
 
 namespace UniversalRemote.Server
 {
-	internal class Program
-	{
-		public static void Main(string[] args)
-		{
-			var wssv = new WebSocketServer("ws://localhost:42566");
-
-			wssv.AddWebSocketService<UniversalRemoteEndpoint>("/universalremote");
-			wssv.Start();
-			Console.ReadKey(true);
-			wssv.Stop();
-		}
-	}
-
 	public class UniversalRemoteEndpoint : WebSocketBehavior
 	{
 		private ILogger _logger;
