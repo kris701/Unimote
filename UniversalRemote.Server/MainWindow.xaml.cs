@@ -14,12 +14,14 @@ namespace UniversalRemote.Server
 
 		private void RefreshLogsButton_Click(object sender, RoutedEventArgs e)
 		{
-			LogField.Text = App.Server.Logger.GetLogs();
+			if (App.Server.Logger != null)
+				LogField.Text = App.Server.GetStringLog();
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			LogField.Text = App.Server.Logger.GetLogs();
+			if (App.Server.Logger != null)
+				LogField.Text = App.Server.GetStringLog();
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

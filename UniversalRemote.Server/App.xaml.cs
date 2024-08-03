@@ -1,6 +1,6 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using System.Windows;
-using UniversalRemote.Server.Core;
+using UniversalRemote.Server.API;
 
 namespace UniversalRemote.Server
 {
