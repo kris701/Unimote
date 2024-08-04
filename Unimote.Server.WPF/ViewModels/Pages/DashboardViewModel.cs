@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Unimote.Server.API.Models.Database;
 using Unimote.Server.WPF.Helpers;
 
 namespace Unimote.Server.WPF.ViewModels.Pages
@@ -18,5 +19,8 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 			CommandAction = () => App.Server.Stop(),
 			CanExecuteFunc = () => App.Server != null && App.Server.IsRunning
 		};
+
+		[ObservableProperty]
+		private StatisticModel _stats = App.Server == null ? new StatisticModel() : App.Server.Database.Statistics;
 	}
 }

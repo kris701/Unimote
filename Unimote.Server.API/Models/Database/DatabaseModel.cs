@@ -9,6 +9,7 @@ namespace Unimote.Server.API.Models.Database
 		public string FileName { get; set; }
 		public List<UserModel> Users { get; set; }
 		public List<RemoteConfiguration> RemoteConfigurations { get; set; }
+		public StatisticModel Statistics { get; set; }
 
 		public DatabaseModel(string fileName)
 		{
@@ -17,6 +18,7 @@ namespace Unimote.Server.API.Models.Database
 				new UserModel("admin", "password")
 			};
 			RemoteConfigurations = new List<RemoteConfiguration>();
+			Statistics = new StatisticModel();
 		}
 
 		public void Save() => File.WriteAllText(FileName, JsonSerializer.Serialize(this));

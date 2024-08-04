@@ -20,8 +20,14 @@
         <TextBlock
             FontSize="20"
             FontWeight="Medium"
-            Text="Server Controls" />
+            Text="Statistics" />
+        <TextBlock Text="{Binding ViewModel.Stats.CommandsExecuted, StringFormat='Commands Executed: {0}'}" />
 
+        <ui:NavigationViewItemSeparator Width="0" Height="10"/>
+        <TextBlock
+            FontSize="20"
+            FontWeight="Medium"
+            Text="Server Controls" />
         <StackPanel Orientation="Horizontal" Margin="5">
             <ui:Button
             Grid.Column="0"

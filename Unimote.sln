@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimote.Server", "Unimote.Server\Unimote.Server.csproj", "{8E7B177A-B581-4C28-B210-4B3730165795}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimote.Server.API", "Unimote.Server.API\Unimote.Server.API.csproj", "{A9B83C40-49BA-4860-AD83-C102774DE4DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unimote.Server.WPF", "Unimote.Server.WPF\Unimote.Server.WPF.csproj", "{B1114716-464A-4C0F-BBAB-36BDD8FC1DFB}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8E7B177A-B581-4C28-B210-4B3730165795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E7B177A-B581-4C28-B210-4B3730165795}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E7B177A-B581-4C28-B210-4B3730165795}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E7B177A-B581-4C28-B210-4B3730165795}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A9B83C40-49BA-4860-AD83-C102774DE4DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9B83C40-49BA-4860-AD83-C102774DE4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9B83C40-49BA-4860-AD83-C102774DE4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
