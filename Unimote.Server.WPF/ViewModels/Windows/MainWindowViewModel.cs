@@ -21,9 +21,9 @@ namespace Unimote.Server.WPF.ViewModels.Windows
 			},
 			new NavigationViewItem()
 			{
-				Content = "Data",
-				Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
-				TargetPageType = typeof(Views.Pages.DataPage)
+				Content = "Logs",
+				Icon = new SymbolIcon { Symbol = SymbolRegular.Document16 },
+				TargetPageType = typeof(Views.Pages.LogsPage)
 			}
 		};
 
