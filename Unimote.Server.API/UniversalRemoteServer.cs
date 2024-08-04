@@ -1,4 +1,5 @@
-﻿using Unimote.Server.API.Models.Database;
+﻿using System.Text.Json;
+using Unimote.Server.API.Models.Database;
 using Unimote.Server.API.Models.Settings;
 using Unimote.Server.API.Services;
 
@@ -14,11 +15,26 @@ namespace Unimote.Server.API
 		public bool IsRunning { get; internal set; } = false;
 		private IHost? _host;
 
-		public UniversalRemoteServer(SettingsModel settings)
+		public UniversalRemoteServer(string settingsFile, string databaseFile)
 		{
-			Settings = settings;
-			Database = new DatabaseModel();
-			Database.Load();
+			Settings = new SettingsModel(settingsFile);
+			if (File.Exists(settingsFile))
+			{
+				var settings = JsonSerializer.Deserialize<SettingsModel>(File.ReadAllText(settingsFile));
+				if (settings != null)
+					Settings = settings;
+			}
+
+			Database = new DatabaseModel(databaseFile);
+			if (File.Exists(databaseFile))
+			{
+				var database = JsonSerializer.Deserialize<DatabaseModel>(File.ReadAllText(databaseFile));
+				if (database != null)
+					Database = database;
+			}
+
+			Settings.Save();
+			Database.Save();
 		}
 
 		public void Start()
@@ -34,9 +50,10 @@ namespace Unimote.Server.API
 			if (_host != null)
 			{
 				_host.StopAsync();
-				_host.WaitForShutdown();
 				_host.Dispose();
 			}
+			Settings.Save();
+			Database.Save();
 			IsRunning = false;
 		}
 
@@ -45,7 +62,7 @@ namespace Unimote.Server.API
 			var builder = Host.CreateDefaultBuilder();
 			builder.ConfigureWebHostDefaults(webBuilder =>
 			{
-				webBuilder.UseStartup<StartUp>((w) => new StartUp(w.Configuration, Database) );
+				webBuilder.UseStartup<StartUp>((w) => new StartUp(w.Configuration, Database, Settings) );
 				webBuilder.UseUrls($"http://localhost:{Port}");
 			});
 			builder.ConfigureServices(servicesCollection =>

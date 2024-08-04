@@ -9,7 +9,7 @@ namespace UniversalRemote.Server
 	/// </summary>
 	public partial class App : Application
 	{
-		public static UniversalRemoteServer Server = new UniversalRemoteServer(new Unimote.Server.API.Models.Settings.SettingsModel() { EnableWebControl = true });
+		public static UniversalRemoteServer Server = new UniversalRemoteServer("settings.json","database.json");
 		private TaskbarIcon _notifyIcon;
 
 		protected override void OnStartup(StartupEventArgs e)

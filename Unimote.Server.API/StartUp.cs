@@ -12,16 +12,19 @@ namespace Unimote.Server.API
 	public class StartUp
 	{
 		public IConfiguration Configuration { get; }
+		public SettingsModel Settings { get; }
 		public DatabaseModel Database { get; }
-		public StartUp(IConfiguration configuration, DatabaseModel database)
+
+		public StartUp(IConfiguration configuration, DatabaseModel database, SettingsModel settings)
 		{
 			Configuration = configuration;
 			Database = database;
+			Settings = settings;
 		}
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			var key = Encoding.ASCII.GetBytes(Database.JWTSecret);
+			var key = Encoding.ASCII.GetBytes(Settings.JWTSecret);
 			services.AddAuthentication(options =>
 			{
 				options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -75,7 +78,7 @@ namespace Unimote.Server.API
 			});
 		}
 
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, SettingsModel settings)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
 		{
 			if (File.Exists("log.txt"))
 				File.Delete("log.txt");

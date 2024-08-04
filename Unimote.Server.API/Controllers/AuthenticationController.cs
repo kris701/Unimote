@@ -16,11 +16,13 @@ namespace Unimote.Server.API.Controllers
 	{
 		private readonly ILogger<AuthenticationController> _logger;
 		private readonly DatabaseModel _database;
+		private readonly SettingsModel _settings;
 
-		public AuthenticationController(ILogger<AuthenticationController> logger, DatabaseModel database)
+		public AuthenticationController(ILogger<AuthenticationController> logger, DatabaseModel database, SettingsModel settings)
 		{
 			_logger = logger;
 			_database = database;
+			_settings = settings;
 		}
 
 		[HttpPost("")]
@@ -33,7 +35,7 @@ namespace Unimote.Server.API.Controllers
 
 			return Ok(new AuthenticationOutput()
 			{
-				Token = JWTService.GenerateJWTToken(target, _database.JWTSecret, _database.JWTTokenLifetime)
+				Token = JWTService.GenerateJWTToken(target, _settings.JWTSecret, _settings.JWTTokenLifetime)
 			});
 		}
 	}
