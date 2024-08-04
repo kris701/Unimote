@@ -1,13 +1,29 @@
 {
-  "name": "Hello Extensions",
-  "description": "Base Level Extension",
+  "name": "Unimote Chrome Extension",
+  "description": "Chrome integration for Unimote",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "hello.html",
-    "default_icon": "hello_extensions.png"
-  },  
-  "background": {
-    "service_worker": "popup.js"
-  }
+    "default_popup": "Unimote_menu.html",
+    "default_icon": "Unimote_icon.png"
+  },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],  
+  "permissions": [
+   "storage"
+  ],
+  "content_scripts": [
+	  {
+		  "matches": [
+			"http://*/*",
+			"https://*/*"
+		  ],
+		  "run_at": "document_idle",
+		  "js": [
+			"content.js"
+		  ]
+	  }
+   ]
 }

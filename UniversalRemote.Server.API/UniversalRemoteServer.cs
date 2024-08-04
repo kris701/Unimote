@@ -1,4 +1,5 @@
 ﻿using UniversalRemote.Server.API.Models.Settings;
+using UniversalRemote.Server.API.Services;
 
 namespace UniversalRemote.Server.API
 {
@@ -44,6 +45,7 @@ namespace UniversalRemote.Server.API
 			});
 			builder.ConfigureServices(servicesCollection => {
 				servicesCollection.AddSingleton<SettingsModel>(Settings);
+				servicesCollection.AddSingleton<WebSocketService>(new WebSocketService(Settings));
 			});
 			return builder;
 		}

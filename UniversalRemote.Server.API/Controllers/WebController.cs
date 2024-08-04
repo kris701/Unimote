@@ -13,25 +13,15 @@ namespace UniversalRemote.Server.API.Controllers
 	[Route("web")]
 	public class WebController : ControllerBase
 	{
-		public int Port { get; set; } = 42570;
-
 		private readonly ILogger<WebController> _logger;
 		private readonly SettingsModel _settings;
-		private readonly WebSocketServer? _socketServer;
+		private readonly WebSocketService _socketServer;
 
-		private readonly ChromeSocketService? _chromeService;
-
-		public WebController(ILogger<WebController> logger, SettingsModel settings)
+		public WebController(ILogger<WebController> logger, SettingsModel settings, WebSocketService socketServer)
 		{
 			_logger = logger;
 			_settings = settings;
-			if (_settings.EnableWebControl)
-			{
-				_socketServer = new WebSocketServer($"ws://localhost:{Port}");
-				_chromeService = new ChromeSocketService();
-				_socketServer.AddWebSocketService<ChromeSocketService>("/chrome", () => _chromeService);
-				_socketServer.Start();
-			}
+			_socketServer = socketServer;
 		}
 
 		[HttpPost("click")]
@@ -39,13 +29,13 @@ namespace UniversalRemote.Server.API.Controllers
 		{
 			if (!_settings.EnableWebControl)
 				return BadRequest("Web control is disabled!");
-			if (_chromeService == null || _chromeService.State != WebSocketSharp.WebSocketState.Open)
-				return BadRequest("Chrome service not started or connected!");
 
-			switch (inputModel.TargetBrowser.ToUpper())
+			switch (inputModel.Browser)
 			{
-				case "CHROME":
-					_chromeService.SendMessage($"{inputModel.TargetTab};{inputModel.XPath}");
+				case ClickOnWebPageInput.BrowserTypes.Chrome:
+					if (!_socketServer.IsEndpointConnected("/chrome"))
+						return BadRequest("Chrome service not started or connected!");
+					_socketServer.SendMessageToEndpoint("/chrome", $"{inputModel.TargetTab};{inputModel.XPath};click");
 					break;
 			}
 

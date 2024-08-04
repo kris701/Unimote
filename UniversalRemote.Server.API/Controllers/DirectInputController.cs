@@ -13,12 +13,13 @@ namespace UniversalRemote.Server.API.Controllers
 	{
 		private readonly ILogger<DirectInputController> _logger;
 		private readonly SettingsModel _settings;
-		private readonly InputSimulator _sim = new InputSimulator();
+		private readonly InputSimulator _sim;
 
 		public DirectInputController(ILogger<DirectInputController> logger, SettingsModel settings)
 		{
 			_logger = logger;
 			_settings = settings;
+			_sim = new InputSimulator();
 		}
 
 		[HttpPost("mouse/move")]
