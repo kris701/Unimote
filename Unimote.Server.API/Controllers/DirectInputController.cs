@@ -1,6 +1,7 @@
 using InputSimulatorStandard;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Unimote.Server.API.Models.Database;
 using Unimote.Server.API.Models.DirectInput;
 using Unimote.Server.API.Models.Settings;
 
@@ -13,12 +14,14 @@ namespace Unimote.Server.API.Controllers
 	{
 		private readonly ILogger<DirectInputController> _logger;
 		private readonly SettingsModel _settings;
+		private readonly DatabaseModel _database;
 		private readonly InputSimulator _sim;
 
-		public DirectInputController(ILogger<DirectInputController> logger, SettingsModel settings)
+		public DirectInputController(ILogger<DirectInputController> logger, SettingsModel settings, DatabaseModel database)
 		{
 			_logger = logger;
 			_settings = settings;
+			_database = database;
 			_sim = new InputSimulator();
 		}
 
@@ -28,6 +31,7 @@ namespace Unimote.Server.API.Controllers
 			if (!_settings.EnableDirectControl)
 				return BadRequest("Direct control is disabled!");
 			_sim.Mouse.MoveMouseToPositionOnVirtualDesktop((double)inputModel.X!, (double)inputModel.Y!);
+			_database.Statistics.CommandsExecuted++;
 			return Ok();
 		}
 
@@ -41,6 +45,7 @@ namespace Unimote.Server.API.Controllers
 				case MouseClickInput.ButtonTypes.Left: _sim.Mouse.LeftButtonClick(); break;
 				case MouseClickInput.ButtonTypes.Right: _sim.Mouse.RightButtonClick(); break;
 			}
+			_database.Statistics.CommandsExecuted++;
 			return Ok();
 		}
 
@@ -50,6 +55,7 @@ namespace Unimote.Server.API.Controllers
 			if (!_settings.EnableDirectControl)
 				return BadRequest("Direct control is disabled!");
 			_sim.Keyboard.KeyPress(inputModel.KeyCode);
+			_database.Statistics.CommandsExecuted++;
 			return Ok();
 		}
 
@@ -59,6 +65,7 @@ namespace Unimote.Server.API.Controllers
 			if (!_settings.EnableDirectControl)
 				return BadRequest("Direct control is disabled!");
 			_sim.Keyboard.TextEntry(inputModel.Text);
+			_database.Statistics.CommandsExecuted++;
 			return Ok();
 		}
 	}

@@ -27,6 +27,20 @@
         <TextBlock
             FontSize="20"
             FontWeight="Medium"
+            Text="Server Status" />
+        <StackPanel>
+            <TextBlock Text="Web Control" />
+            <ui:PassiveScrollViewer MaxHeight="100">
+                <StackPanel x:Name="WebControlConnectionsPanel">
+                    <Label Content="No browser tabs connected"/>
+                </StackPanel>
+            </ui:PassiveScrollViewer>
+        </StackPanel>
+
+        <ui:NavigationViewItemSeparator Width="0" Height="10"/>
+        <TextBlock
+            FontSize="20"
+            FontWeight="Medium"
             Text="Server Controls" />
         <StackPanel Orientation="Horizontal" Margin="5">
             <ui:Button

@@ -3,9 +3,13 @@ using WebSocketSharp.Server;
 
 namespace Unimote.Server.API.Services
 {
-	public class WebSocketService
+	public class WebSocketService : IDisposable
 	{
 		public int Port { get; set; } = 42570;
+		public List<string> Endpoints { get; } = new List<string>()
+		{
+			"/chrome"
+		};
 
 		private readonly WebSocketServer? _socketServer;
 
@@ -14,7 +18,8 @@ namespace Unimote.Server.API.Services
 			if (settings.EnableWebControl)
 			{
 				_socketServer = new WebSocketServer($"ws://localhost:{Port}");
-				_socketServer.AddWebSocketService<WebSocketBehaviourService>("/chrome");
+				foreach(var endpoint in Endpoints)
+					_socketServer.AddWebSocketService<WebSocketBehaviourService>(endpoint);
 				_socketServer.Start();
 			}
 		}
@@ -26,7 +31,21 @@ namespace Unimote.Server.API.Services
 
 		public bool IsEndpointConnected(string endpoint)
 		{
-			return _socketServer?.WebSocketServices[endpoint].Sessions.ActiveIDs.Count() > 0;
+			if (_socketServer == null)
+				return false;
+			return _socketServer.WebSocketServices[endpoint].Sessions.ActiveIDs.Count() > 0;
+		}
+
+		public List<string> GetSessionsForEndpoint(string endpoint)
+		{
+			if (_socketServer == null)
+				return new List<string>();
+			return _socketServer.WebSocketServices[endpoint].Sessions.ActiveIDs.ToList();
+		}
+
+		public void Dispose()
+		{
+			_socketServer?.Stop();
 		}
 	}
 }

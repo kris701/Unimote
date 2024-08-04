@@ -1,4 +1,6 @@
-﻿using Wpf.Ui.Appearance;
+﻿using Unimote.Server.API.Models.Database;
+using Unimote.Server.API.Models.Settings;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
 namespace Unimote.Server.WPF.ViewModels.Pages
@@ -6,6 +8,9 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 	public partial class SettingsViewModel : ObservableObject, INavigationAware
 	{
 		private bool _isInitialized = false;
+
+		[ObservableProperty]
+		private SettingsModel _settings = App.Server.Settings;
 
 		[ObservableProperty]
 		private string _appVersion = String.Empty;
@@ -24,7 +29,7 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		private void InitializeViewModel()
 		{
 			CurrentTheme = ApplicationThemeManager.GetAppTheme();
-			AppVersion = $"UiDesktopApp1 - {GetAssemblyVersion()}";
+			AppVersion = $"Unimote Server UI - {GetAssemblyVersion()}";
 
 			_isInitialized = true;
 		}
@@ -33,6 +38,17 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		{
 			return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
 				?? String.Empty;
+		}
+
+		[RelayCommand]
+		private void OnRestartServer()
+		{
+			if (App.Server == null)
+				return;
+
+			if (App.Server.IsRunning)
+				App.Server.Stop();
+			App.Server.Start();
 		}
 
 		[RelayCommand]

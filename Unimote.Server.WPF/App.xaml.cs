@@ -20,6 +20,10 @@ namespace Unimote.Server.WPF
 	public partial class App
 	{
 		public static UniversalRemoteServer Server;
+		public App()
+		{
+			Server = new UniversalRemoteServer("settings.json", "database.json");
+		}
 
 		// The.NET Generic Host provides dependency injection, configuration, logging, and other services.
 		// https://docs.microsoft.com/dotnet/core/extensions/generic-host
@@ -74,7 +78,6 @@ namespace Unimote.Server.WPF
 		private void OnStartup(object sender, StartupEventArgs e)
 		{
 			_host.Start();
-			Server = new UniversalRemoteServer("settings.json", "database.json");
 			Server.Start();
 		}
 

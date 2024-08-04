@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Unimote.Server.API.Models.Database;
+using Unimote.Server.API.Models.Settings;
 using Unimote.Server.WPF.Helpers;
 
 namespace Unimote.Server.WPF.ViewModels.Pages
@@ -21,6 +22,9 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		};
 
 		[ObservableProperty]
-		private StatisticModel _stats = App.Server == null ? new StatisticModel() : App.Server.Database.Statistics;
+		private SettingsModel _settings = App.Server.Settings;
+
+		[ObservableProperty]
+		private StatisticModel _stats = App.Server.Database.Statistics;
 	}
 }

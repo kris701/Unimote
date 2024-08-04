@@ -13,6 +13,7 @@ namespace Unimote.Server.API
 
 		public SettingsModel Settings { get; }
 		public DatabaseModel Database { get; }
+		public WebSocketService? WebSocketService { get; internal set; }
 
 		public ILogger<UniversalRemoteServer>? Logger { get; private set; }
 		public int Port { get; set; } = 42566;
@@ -54,6 +55,7 @@ namespace Unimote.Server.API
 		{
 			if (_host != null)
 			{
+				WebSocketService?.Dispose();
 				_host.StopAsync();
 				_host.Dispose();
 			}
@@ -74,7 +76,8 @@ namespace Unimote.Server.API
 			builder.ConfigureServices(servicesCollection =>
 			{
 				servicesCollection.AddSingleton(Settings);
-				servicesCollection.AddSingleton(new WebSocketService(Settings));
+				WebSocketService = new WebSocketService(Settings);
+				servicesCollection.AddSingleton(WebSocketService);
 				servicesCollection.AddSingleton(Database);
 			});
 			return builder;
