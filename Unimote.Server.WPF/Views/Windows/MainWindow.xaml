@@ -74,7 +74,7 @@
                 <ContextMenu>
                     <MenuItem Header="Start Server" Command="{Binding ViewModel.StartServerCommand}"/>
                     <MenuItem Header="Stop Server" Command="{Binding ViewModel.StopServerCommand}"/>
-                    <MenuItem Header="Show Window" Command="{Binding ViewModel.ShowWindowCommand, Mode=OneWay}" IsEnabled="{Binding ViewModel.CanShowWindowCommand, Mode=OneWay}"/>
+                    <MenuItem Header="Show Window" Command="{Binding ViewModel.ShowWindowCommand}"/>
                     <MenuItem Header="Hide Window" Command="{Binding ViewModel.HideWindowCommand}"/>
                     <MenuItem Header="Exit Unimote Server" Command="{Binding ViewModel.ExitApplicationCommand}"/>
                 </ContextMenu>

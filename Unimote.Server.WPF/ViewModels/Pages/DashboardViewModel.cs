@@ -1,14 +1,22 @@
-﻿namespace Unimote.Server.WPF.ViewModels.Pages
+﻿using System.Windows.Input;
+using Unimote.Server.WPF.Helpers;
+
+namespace Unimote.Server.WPF.ViewModels.Pages
 {
 	public partial class DashboardViewModel : ObservableObject
 	{
 		[ObservableProperty]
-		private int _counter = 0;
-
-		[RelayCommand]
-		private void OnCounterIncrement()
+		public ICommand _startServerCommand = new DelegateCommand
 		{
-			Counter++;
-		}
+			CommandAction = () => App.Server.Start(),
+			CanExecuteFunc = () => App.Server != null && !App.Server.IsRunning
+		};
+
+		[ObservableProperty]
+		public ICommand _stopServerCommand = new DelegateCommand
+		{
+			CommandAction = () => App.Server.Stop(),
+			CanExecuteFunc = () => App.Server != null && App.Server.IsRunning
+		};
 	}
 }
