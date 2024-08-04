@@ -1,13 +1,9 @@
-﻿using InputSimulatorStandard.Native;
-using InputSimulatorStandard;
-using Microsoft.AspNetCore.Mvc;
-using UniversalRemote.Server.API.Models.DirectInput;
-using WebSocketSharp.Server;
-using UniversalRemote.Server.API.Models.Chrome;
-using UniversalRemote.Server.API.Services;
-using UniversalRemote.Server.API.Models.Settings;
+﻿using Microsoft.AspNetCore.Mvc;
+using Unimote.Server.API.Models.Settings;
+using Unimote.Server.API.Models.Web;
+using Unimote.Server.API.Services;
 
-namespace UniversalRemote.Server.API.Controllers
+namespace Unimote.Server.API.Controllers
 {
 	[ApiController]
 	[Route("web")]

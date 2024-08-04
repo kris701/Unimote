@@ -1,8 +1,7 @@
-﻿using System.Runtime;
-using UniversalRemote.Server.API.Models.Settings;
+﻿using Unimote.Server.API.Models.Settings;
 using WebSocketSharp.Server;
 
-namespace UniversalRemote.Server.API.Services
+namespace Unimote.Server.API.Services
 {
 	public class WebSocketService
 	{

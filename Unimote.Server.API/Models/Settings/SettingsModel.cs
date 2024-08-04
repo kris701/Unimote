@@ -1,4 +1,4 @@
-﻿namespace UniversalRemote.Server.API.Models.Settings
+﻿namespace Unimote.Server.API.Models.Settings
 {
 	public class SettingsModel
 	{

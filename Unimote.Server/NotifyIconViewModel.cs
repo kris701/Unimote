@@ -1,7 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using UniversalRemote.Server;
 
-namespace UniversalRemote.Server
+namespace Unimote.Server
 {
 	public class NotifyIconViewModel
 	{

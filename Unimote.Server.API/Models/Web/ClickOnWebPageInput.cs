@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UniversalRemote.Server.API.Models.Chrome
+namespace Unimote.Server.API.Models.Web
 {
 	public class ClickOnWebPageInput
 	{

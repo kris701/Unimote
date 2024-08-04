@@ -1,4 +1,4 @@
-﻿namespace UniversalRemote.Server.API.Logging
+﻿namespace Unimote.Server.API.Logging
 {
 	public class StringLogger : ILogger
 	{

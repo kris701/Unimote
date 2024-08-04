@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace UniversalRemote.Server
+namespace Unimote.Server
 {
 	public class DelegateCommand : ICommand
 	{

@@ -1,7 +1,7 @@
-﻿using UniversalRemote.Server.API.Logging;
-using UniversalRemote.Server.API.Models.Settings;
+﻿using Unimote.Server.API.Logging;
+using Unimote.Server.API.Models.Settings;
 
-namespace UniversalRemote.Server.API
+namespace Unimote.Server.API
 {
 	public class StartUp
 	{

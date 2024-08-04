@@ -1,4 +1,4 @@
-﻿namespace UniversalRemote.Server.API
+﻿namespace Unimote.Server.API
 {
 	public static class Program
 	{

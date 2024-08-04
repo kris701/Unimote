@@ -1,6 +1,6 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using System.Windows;
-using UniversalRemote.Server.API;
+using Unimote.Server.API;
 
 namespace UniversalRemote.Server
 {
@@ -9,7 +9,7 @@ namespace UniversalRemote.Server
 	/// </summary>
 	public partial class App : Application
 	{
-		public static UniversalRemoteServer Server = new UniversalRemoteServer(new API.Models.Settings.SettingsModel() { EnableWebControl = true });
+		public static UniversalRemoteServer Server = new UniversalRemoteServer(new Unimote.Server.API.Models.Settings.SettingsModel() { EnableWebControl = true });
 		private TaskbarIcon _notifyIcon;
 
 		protected override void OnStartup(StartupEventArgs e)

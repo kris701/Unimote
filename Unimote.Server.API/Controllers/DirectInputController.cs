@@ -1,11 +1,9 @@
 using InputSimulatorStandard;
-using InputSimulatorStandard.Native;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Mvc;
-using UniversalRemote.Server.API.Models.DirectInput;
-using UniversalRemote.Server.API.Models.Settings;
+using Unimote.Server.API.Models.DirectInput;
+using Unimote.Server.API.Models.Settings;
 
-namespace UniversalRemote.Server.API.Controllers
+namespace Unimote.Server.API.Controllers
 {
 	[ApiController]
 	[Route("direct")]

@@ -1,7 +1,7 @@
 ﻿using InputSimulatorStandard.Native;
 using System.ComponentModel.DataAnnotations;
 
-namespace UniversalRemote.Server.API.Models.DirectInput
+namespace Unimote.Server.API.Models.DirectInput
 {
 	public class KeyboardPressInput
 	{

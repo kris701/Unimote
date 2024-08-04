@@ -1,7 +1,7 @@
-﻿using UniversalRemote.Server.API.Models.Settings;
-using UniversalRemote.Server.API.Services;
+﻿using Unimote.Server.API.Models.Settings;
+using Unimote.Server.API.Services;
 
-namespace UniversalRemote.Server.API
+namespace Unimote.Server.API
 {
 	public class UniversalRemoteServer
 	{
@@ -43,9 +43,10 @@ namespace UniversalRemote.Server.API
 				webBuilder.UseStartup<StartUp>();
 				webBuilder.UseUrls($"http://localhost:{Port}");
 			});
-			builder.ConfigureServices(servicesCollection => {
-				servicesCollection.AddSingleton<SettingsModel>(Settings);
-				servicesCollection.AddSingleton<WebSocketService>(new WebSocketService(Settings));
+			builder.ConfigureServices(servicesCollection =>
+			{
+				servicesCollection.AddSingleton(Settings);
+				servicesCollection.AddSingleton(new WebSocketService(Settings));
 			});
 			return builder;
 		}
