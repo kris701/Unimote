@@ -1,10 +1,12 @@
 using InputSimulatorStandard;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Unimote.Server.API.Models.DirectInput;
 using Unimote.Server.API.Models.Settings;
 
 namespace Unimote.Server.API.Controllers
 {
+	[Authorize]
 	[ApiController]
 	[Route("direct")]
 	public class DirectInputController : ControllerBase
