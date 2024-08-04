@@ -7,6 +7,10 @@ namespace Unimote.Server.API
 {
 	public class UniversalRemoteServer
 	{
+		public delegate void StatusEventHandler();
+		public event StatusEventHandler? OnServerStart;
+		public event StatusEventHandler? OnServerStop;
+
 		public SettingsModel Settings { get; }
 		public DatabaseModel Database { get; }
 
@@ -43,6 +47,7 @@ namespace Unimote.Server.API
 			Logger = _host.Services.GetRequiredService<ILogger<UniversalRemoteServer>>();
 			_host.StartAsync();
 			IsRunning = true;
+			OnServerStart?.Invoke();
 		}
 
 		public void Stop()
@@ -55,6 +60,7 @@ namespace Unimote.Server.API
 			Settings.Save();
 			Database.Save();
 			IsRunning = false;
+			OnServerStop?.Invoke();
 		}
 
 		private IHostBuilder CreateHostBuilder()
@@ -62,7 +68,7 @@ namespace Unimote.Server.API
 			var builder = Host.CreateDefaultBuilder();
 			builder.ConfigureWebHostDefaults(webBuilder =>
 			{
-				webBuilder.UseStartup<StartUp>((w) => new StartUp(w.Configuration, Database, Settings) );
+				webBuilder.UseStartup<StartUp>((w) => new StartUp(w.Configuration, Database, Settings));
 				webBuilder.UseUrls($"http://localhost:{Port}");
 			});
 			builder.ConfigureServices(servicesCollection =>

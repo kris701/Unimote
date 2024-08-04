@@ -1,27 +1,32 @@
 ﻿using System.Windows;
+using System.Windows.Input;
+using Unimote.Server.UserControls;
 
-namespace UniversalRemote.Server
+namespace Unimote.Server
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		public ICommand ShowLogWindow
+		{
+			get
+			{
+				return new DelegateCommand
+				{
+					CommandAction = () =>
+					{
+						MainGrid.Children.Clear();
+						MainGrid.Children.Add(new LogView());
+					}
+				};
+			}
+		}
+
 		public MainWindow()
 		{
 			InitializeComponent();
-		}
-
-		private void RefreshLogsButton_Click(object sender, RoutedEventArgs e)
-		{
-			if (App.Server.Logger != null)
-				LogField.Text = App.Server.GetStringLog();
-		}
-
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			if (App.Server.Logger != null)
-				LogField.Text = App.Server.GetStringLog();
 		}
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

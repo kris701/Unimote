@@ -5,7 +5,6 @@ using System.Text;
 using Unimote.Server.API.Logging;
 using Unimote.Server.API.Models.Database;
 using Unimote.Server.API.Models.Settings;
-using Unimote.Server.API.Services;
 
 namespace Unimote.Server.API
 {
