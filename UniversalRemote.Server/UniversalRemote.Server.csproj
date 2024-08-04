@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UniversalRemote.Server.Core2\UniversalRemote.Server.API.csproj" />
+    <ProjectReference Include="..\UniversalRemote.Server.API\UniversalRemote.Server.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

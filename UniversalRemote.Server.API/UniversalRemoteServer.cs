@@ -1,14 +1,18 @@
-﻿namespace UniversalRemote.Server.API
+﻿using UniversalRemote.Server.API.Models.Settings;
+
+namespace UniversalRemote.Server.API
 {
 	public class UniversalRemoteServer
 	{
+		public SettingsModel Settings { get; set; }
 		public ILogger<UniversalRemoteServer>? Logger { get; private set; }
 		public int Port { get; set; } = 42566;
 		public bool IsRunning { get; internal set; } = false;
 		private IHost? _host;
 
-		public UniversalRemoteServer()
+		public UniversalRemoteServer(SettingsModel settings)
 		{
+			Settings = settings;
 		}
 
 		public void Start()
@@ -37,6 +41,9 @@
 			{
 				webBuilder.UseStartup<StartUp>();
 				webBuilder.UseUrls($"http://localhost:{Port}");
+			});
+			builder.ConfigureServices(servicesCollection => {
+				servicesCollection.AddSingleton<SettingsModel>(Settings);
 			});
 			return builder;
 		}

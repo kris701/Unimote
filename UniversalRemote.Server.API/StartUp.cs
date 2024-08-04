@@ -1,4 +1,5 @@
 ﻿using UniversalRemote.Server.API.Logging;
+using UniversalRemote.Server.API.Models.Settings;
 
 namespace UniversalRemote.Server.API
 {
@@ -12,8 +13,6 @@ namespace UniversalRemote.Server.API
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllers();
-			services.AddEndpointsApiExplorer();
 			services.AddSwaggerGen();
 			services.AddControllers(options =>
 			{
@@ -21,7 +20,7 @@ namespace UniversalRemote.Server.API
 			});
 		}
 
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, SettingsModel settings)
 		{
 			if (File.Exists("log.txt"))
 				File.Delete("log.txt");

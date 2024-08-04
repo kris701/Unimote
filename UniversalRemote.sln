@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalRemote.Server", "UniversalRemote.Server\UniversalRemote.Server.csproj", "{8E7B177A-B581-4C28-B210-4B3730165795}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalRemote.Server.API", "UniversalRemote.Server.Core2\UniversalRemote.Server.API.csproj", "{A9B83C40-49BA-4860-AD83-C102774DE4DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalRemote.Server.API", "UniversalRemote.Server.API\UniversalRemote.Server.API.csproj", "{A9B83C40-49BA-4860-AD83-C102774DE4DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

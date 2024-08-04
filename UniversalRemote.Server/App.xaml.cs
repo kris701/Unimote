@@ -9,7 +9,7 @@ namespace UniversalRemote.Server
 	/// </summary>
 	public partial class App : Application
 	{
-		public static UniversalRemoteServer Server = new UniversalRemoteServer();
+		public static UniversalRemoteServer Server = new UniversalRemoteServer(new API.Models.Settings.SettingsModel() { EnableWebControl = true });
 		private TaskbarIcon _notifyIcon;
 
 		protected override void OnStartup(StartupEventArgs e)

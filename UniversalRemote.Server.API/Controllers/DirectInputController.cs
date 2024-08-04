@@ -3,6 +3,7 @@ using InputSimulatorStandard.Native;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Mvc;
 using UniversalRemote.Server.API.Models.DirectInput;
+using UniversalRemote.Server.API.Models.Settings;
 
 namespace UniversalRemote.Server.API.Controllers
 {
@@ -11,23 +12,29 @@ namespace UniversalRemote.Server.API.Controllers
 	public class DirectInputController : ControllerBase
 	{
 		private readonly ILogger<DirectInputController> _logger;
+		private readonly SettingsModel _settings;
 		private readonly InputSimulator _sim = new InputSimulator();
 
-		public DirectInputController(ILogger<DirectInputController> logger)
+		public DirectInputController(ILogger<DirectInputController> logger, SettingsModel settings)
 		{
 			_logger = logger;
+			_settings = settings;
 		}
 
 		[HttpPost("mouse/move")]
-		public IActionResult MouseMove([FromQuery] MouseMoveInput inputModel)
+		public IActionResult MouseMove([FromBody] MouseMoveInput inputModel)
 		{
+			if (!_settings.EnableDirectControl)
+				return BadRequest("Direct control is disabled!");
 			_sim.Mouse.MoveMouseToPositionOnVirtualDesktop((double)inputModel.X!, (double)inputModel.Y!);
 			return Ok();
 		}
 
 		[HttpPost("mouse/click")]
-		public IActionResult MouseClick([FromQuery] MouseClickInput inputModel)
+		public IActionResult MouseClick([FromBody] MouseClickInput inputModel)
 		{
+			if (!_settings.EnableDirectControl)
+				return BadRequest("Direct control is disabled!");
 			switch (inputModel.Button)
 			{
 				case MouseClickInput.ButtonTypes.Left: _sim.Mouse.LeftButtonClick(); break;
@@ -37,15 +44,19 @@ namespace UniversalRemote.Server.API.Controllers
 		}
 
 		[HttpPost("keyboard/press")]
-		public IActionResult KeyboardPress([FromQuery] KeyboardPressInput inputModel)
+		public IActionResult KeyboardPress([FromBody] KeyboardPressInput inputModel)
 		{
-			_sim.Keyboard.KeyPress((VirtualKeyCode)inputModel.KeyCode);
+			if (!_settings.EnableDirectControl)
+				return BadRequest("Direct control is disabled!");
+			_sim.Keyboard.KeyPress(inputModel.KeyCode);
 			return Ok();
 		}
 
 		[HttpPost("keyboard/text")]
-		public IActionResult KeyboardWriteText([FromQuery] KeyboardTextInput inputModel)
+		public IActionResult KeyboardWriteText([FromBody] KeyboardTextInput inputModel)
 		{
+			if (!_settings.EnableDirectControl)
+				return BadRequest("Direct control is disabled!");
 			_sim.Keyboard.TextEntry(inputModel.Text);
 			return Ok();
 		}

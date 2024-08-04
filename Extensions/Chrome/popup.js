@@ -5,7 +5,7 @@ connect();
 keepAlive();
 
 function connect() {
-  webSocket = new WebSocket('ws:\\localhost:42566');
+  webSocket = new WebSocket('ws:\\localhost:42570');
 
   webSocket.onopen = (event) => {
     console.log('websocket open');
