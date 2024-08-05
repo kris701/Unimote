@@ -1,5 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using Unimote.Server.API.Models.Users;
@@ -23,6 +24,8 @@ namespace Unimote.Server.API.Services
 				//SigningCredentials = new SigningAudienceCertificate().GetAudienceSigningKey(_privateKey)
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 			};
+			foreach (var allowedSection in user.AllowedSections)
+				tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, allowedSection.Name.Split(";")[0].Trim()));
 			var token = tokenHandler.CreateToken(tokenDescriptor);
 			return tokenHandler.WriteToken(token);
 		}

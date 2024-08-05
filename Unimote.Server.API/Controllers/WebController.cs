@@ -7,7 +7,7 @@ using Unimote.Server.API.Services;
 
 namespace Unimote.Server.API.Controllers
 {
-	[Authorize]
+	[Authorize(Roles = "WebControl")]
 	[ApiController]
 	[Route("web")]
 	public class WebController : ControllerBase

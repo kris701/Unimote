@@ -7,7 +7,7 @@ using Unimote.Server.API.Models.Settings;
 
 namespace Unimote.Server.API.Controllers
 {
-	[Authorize]
+	[Authorize(Roles = "DirectControl")]
 	[ApiController]
 	[Route("direct")]
 	public class DirectInputController : ControllerBase

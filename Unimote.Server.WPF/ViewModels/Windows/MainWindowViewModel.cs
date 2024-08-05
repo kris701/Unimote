@@ -54,8 +54,14 @@ namespace Unimote.Server.WPF.ViewModels.Windows
 			},
 			new NavigationViewItem()
 			{
+				Content = "Users",
+				Icon = new SymbolIcon { Symbol = SymbolRegular.CommunicationPerson24 },
+				TargetPageType = typeof(Views.Pages.UsersPage)
+			},
+			new NavigationViewItem()
+			{
 				Content = "Logs",
-				Icon = new SymbolIcon { Symbol = SymbolRegular.Document16 },
+				Icon = new SymbolIcon { Symbol = SymbolRegular.Document24 },
 				TargetPageType = typeof(Views.Pages.LogsPage)
 			}
 		};

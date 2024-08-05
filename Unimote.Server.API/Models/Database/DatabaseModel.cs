@@ -10,12 +10,18 @@ namespace Unimote.Server.API.Models.Database
 		public List<UserModel> Users { get; set; }
 		public List<RemoteConfiguration> RemoteConfigurations { get; set; }
 		public StatisticModel Statistics { get; set; }
+		public List<AllowedSection> Sections { get; set; }
 
 		public DatabaseModel(string fileName)
 		{
 			FileName = fileName;
+			Sections = new List<AllowedSection>()
+			{
+				new AllowedSection("DirectControl", true),
+				new AllowedSection("WebControl", true),
+			};
 			Users = new List<UserModel>() {
-				new UserModel("admin", "password")
+				new UserModel("admin", "password", new List<AllowedSection>(Sections))
 			};
 			RemoteConfigurations = new List<RemoteConfiguration>();
 			Statistics = new StatisticModel();
