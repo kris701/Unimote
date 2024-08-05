@@ -1,0 +1,79 @@
+﻿<Page 
+    x:Class="Unimote.Server.WPF.Views.Pages.ConfigurationsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Unimote.Server.WPF.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:models="clr-namespace:Unimote.Server.API.Models.RemoteConfigurations;assembly=Unimote.Server.API"
+    xmlns:helpers="clr-namespace:Unimote.Server.WPF.Helpers"
+    Title="ConfigurationsPage"
+    d:DataContext="{d:DesignInstance local:ConfigurationsPage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ScrollViewer.CanContentScroll="False"
+    
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
+
+    <Grid IsEnabled="{Binding ViewModel.IsLoaded}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ui:Button Content="New" Margin="10,0,0,0" Appearance="Primary" HorizontalAlignment="Stretch" Command="{Binding ViewModel.AddConfigurationCommand}" />
+        <ui:Button Grid.Column="1" Margin="10,0,0,0" Content="Save" Appearance="Primary" HorizontalAlignment="Stretch" Command="{Binding ViewModel.SaveConfigurationsCommand}" />
+        <ui:DropDownButton Grid.Column="2" Content="Select Configuration" Margin="10,0,0,0">
+            <ui:DropDownButton.Flyout>
+                <ContextMenu ItemsSource="{Binding ViewModel.Configurations}">
+                    <ContextMenu.ItemTemplate>
+                        <DataTemplate>
+                            <ui:MenuItem 
+                                Header="{Binding Name}"
+                                Command="{Binding ViewModel.SelectConfigurationCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ConfigurationsPage}}}"
+                                CommandParameter="{Binding ID}"/>
+                        </DataTemplate>
+                    </ContextMenu.ItemTemplate>
+                </ContextMenu>
+            </ui:DropDownButton.Flyout>
+        </ui:DropDownButton>
+
+        <ui:ProgressRing Visibility="{Binding ViewModel.IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" IsIndeterminate="True" Grid.Row="1" Grid.ColumnSpan="4" Margin="10"/>
+
+        <ui:PassiveScrollViewer Grid.Row="1" Grid.ColumnSpan="4" Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <ui:Button Grid.Row="1" Margin="5" Content="Delete Configuration" Appearance="Danger" HorizontalAlignment="Stretch" Command="{Binding ViewModel.DeleteConfigurationCommand}" />
+                <ui:Button Grid.Row="2" Margin="5" Content="New Remote Button" Appearance="Info" HorizontalAlignment="Stretch" Command="{Binding ViewModel.AddNewButtonCommand}" />
+
+                <ui:TextBox Grid.ColumnSpan="2" Margin="5" Text="{Binding ViewModel.Configuration.Name, Mode=TwoWay}"/>
+                <ui:TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Margin="5" Text="{Binding ViewModel.Configuration.Description, Mode=TwoWay}"/>
+            </Grid>
+        </ui:PassiveScrollViewer>
+    </Grid>
+</Page>

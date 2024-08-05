@@ -55,7 +55,7 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		private void OnSaveUsers()
 		{
 			App.Server.Database.Users = new List<UserModel>(Users);
-			OnRestartServer();
+			ServerHelper.RestartServer();
 		}
 
 		[RelayCommand]
@@ -68,19 +68,6 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 				tmp.Remove(toRemove);
 				Users = tmp;
 			}
-		}
-
-		[RelayCommand]
-		private void OnRestartServer()
-		{
-			if (App.Server == null)
-				return;
-			if (!App.Server.IsRunning)
-				return;
-
-			if (App.Server.IsRunning)
-				App.Server.Stop();
-			App.Server.Start();
 		}
 	}
 }

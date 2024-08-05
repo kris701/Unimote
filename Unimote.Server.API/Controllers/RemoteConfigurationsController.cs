@@ -24,12 +24,7 @@ namespace Unimote.Server.API.Controllers
 		{
 			var list = new List<RemoteConfigurationListItem>();
 			foreach (var item in _database.RemoteConfigurations)
-				list.Add(new RemoteConfigurationListItem()
-				{
-					ID = item.ID,
-					Name = item.Name,
-					Description = item.Description,
-				});
+				list.Add(new RemoteConfigurationListItem(item.ID, item.Name, item.Description));
 			return Ok(list);
 		}
 

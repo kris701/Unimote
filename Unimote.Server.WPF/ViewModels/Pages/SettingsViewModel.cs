@@ -1,5 +1,6 @@
 ﻿using Unimote.Server.API.Models.Database;
 using Unimote.Server.API.Models.Settings;
+using Unimote.Server.WPF.Helpers;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 
@@ -43,14 +44,7 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		[RelayCommand]
 		private void OnRestartServer()
 		{
-			if (App.Server == null)
-				return;
-			if (!App.Server.IsRunning)
-				return;
-
-			if (App.Server.IsRunning)
-				App.Server.Stop();
-			App.Server.Start();
+			ServerHelper.RestartServer();
 		}
 
 		[RelayCommand]

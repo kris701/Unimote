@@ -59,6 +59,8 @@ namespace Unimote.Server.WPF
 				services.AddSingleton<DashboardViewModel>();
 				services.AddSingleton<LogsPage>();
 				services.AddSingleton<LogsViewModel>();
+				services.AddSingleton<ConfigurationsPage>();
+				services.AddSingleton<ConfigurationsViewModel>();
 				services.AddSingleton<UsersPage>();
 				services.AddSingleton<UsersViewModel>();
 				services.AddSingleton<SettingsPage>();
