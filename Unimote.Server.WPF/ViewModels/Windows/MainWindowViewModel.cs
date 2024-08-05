@@ -1,12 +1,45 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Unimote.Server.WPF.Helpers;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 namespace Unimote.Server.WPF.ViewModels.Windows
 {
 	public partial class MainWindowViewModel : ObservableObject
 	{
+		public MainWindowViewModel(ISnackbarService snackbarService)
+		{
+			_startServerCommand = new DelegateCommand
+			{
+				CommandAction = () => {
+					App.Server.Start();
+					snackbarService.Show(
+						"Starting Started!",
+						"All APIs should be available now.",
+						ControlAppearance.Success,
+						new SymbolIcon(SymbolRegular.ServerSurface16),
+						TimeSpan.FromSeconds(2)
+					);
+				},
+				CanExecuteFunc = () => App.Server != null && !App.Server.IsRunning
+			};
+			_stopServerCommand = new DelegateCommand
+			{
+				CommandAction = () => {
+					App.Server.Stop();
+					snackbarService.Show(
+						"Starting Stopped!",
+						"Server is now offline.",
+						ControlAppearance.Success,
+						new SymbolIcon(SymbolRegular.ServerSurface16),
+						TimeSpan.FromSeconds(2)
+					);
+				},
+				CanExecuteFunc = () => App.Server != null && App.Server.IsRunning
+			};
+		}
+
 		[ObservableProperty]
 		private string _applicationTitle = "Unimote Server";
 
@@ -59,17 +92,9 @@ namespace Unimote.Server.WPF.ViewModels.Windows
 		};
 
 		[ObservableProperty]
-		public ICommand _startServerCommand = new DelegateCommand
-		{
-			CommandAction = () => App.Server.Start(),
-			CanExecuteFunc = () => App.Server != null && !App.Server.IsRunning
-		};
+		public ICommand _startServerCommand;
 
 		[ObservableProperty]
-		public ICommand _stopServerCommand = new DelegateCommand
-		{
-			CommandAction = () => App.Server.Stop(),
-			CanExecuteFunc = () => App.Server != null && App.Server.IsRunning
-		};
+		public ICommand _stopServerCommand;
 	}
 }

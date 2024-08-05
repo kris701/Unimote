@@ -6,6 +6,8 @@
     xmlns:local="clr-namespace:Unimote.Server.WPF.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:models="clr-namespace:Unimote.Server.WPF.Models"
+    xmlns:helpers="clr-namespace:Unimote.Server.WPF.Helpers"
     Title="DashboardPage"
     d:DataContext="{d:DesignInstance local:DashboardPage,
                                      IsDesignTimeCreatable=False}"
@@ -15,28 +17,73 @@
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
-
+    <Page.Resources>
+        <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
+    
     <StackPanel>
         <TextBlock
             FontSize="20"
             FontWeight="Medium"
             Text="Statistics" />
+        <ui:VirtualizingItemsControl
+            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+            ItemsSource="{Binding ViewModel.Stats, Mode=OneWay}"
+            VirtualizingPanel.CacheLengthUnit="Item">
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:StatsItem}">
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <ui:TextBox
+                            IsReadOnly="true"
+                            Text="{Binding Name, Mode=OneWay}"/>
+                        <ui:TextBox
+                            Grid.Column="1"
+                            IsReadOnly="true"
+                            Text="{Binding Value, Mode=OneWay}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ui:VirtualizingItemsControl>
         <TextBlock Text="{Binding ViewModel.Stats.CommandsExecuted, StringFormat='Commands Executed: {0}'}" />
 
-        <ui:NavigationViewItemSeparator Width="0" Height="10"/>
+        <StackPanel Visibility="{Binding ViewModel.Settings.EnableWebControl, Converter={StaticResource BoolToVisibilityConverter}}">
         <TextBlock
             FontSize="20"
             FontWeight="Medium"
-            Text="Server Status" />
-        <StackPanel>
-            <TextBlock Text="Web Control" />
-            <ui:PassiveScrollViewer MaxHeight="100">
-                <StackPanel x:Name="WebControlConnectionsPanel">
-                    <Label Content="No browser tabs connected"/>
-                </StackPanel>
-            </ui:PassiveScrollViewer>
-        </StackPanel>
+            Text="Web Control" />
+        <StackPanel x:Name="StatsPanel">
+            <TextBlock Text="{Binding ViewModel.ConnectedWebTabs.Count, StringFormat='Connected tabs: {0}'}" />
 
+            <ui:ListView ItemsSource="{Binding ViewModel.ConnectedWebTabs}" MaxHeight="200">
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:WebConnectedItem}">
+                        <Grid Margin="8,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                    Grid.Row="0"
+                                    Margin="12,6,0,0"
+                                    FontWeight="Bold"
+                                    Text="{Binding Endpoint, Mode=OneWay}" />
+                            <TextBlock
+                                    Grid.Row="1"
+                                    Margin="12,0,0,6"
+                                    Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="{Binding ID, Mode=OneWay}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ui:ListView>
+        </StackPanel>
+        </StackPanel>
+        
         <ui:NavigationViewItemSeparator Width="0" Height="10"/>
         <TextBlock
             FontSize="20"

@@ -23,20 +23,7 @@ namespace Unimote.Server.WPF.Views.Pages
 
 		private void WebConnectionsUpdateTimer_Tick(object sender, EventArgs e)
 		{
-			if (App.Server == null || App.Server.WebSocketService == null)
-				return;
-			WebControlConnectionsPanel.Children.Clear();
-			if (!ViewModel.Settings.EnableWebControl || !App.Server.IsRunning)
-				return;
-
-			foreach (var endpoint in App.Server.WebSocketService.Endpoints)
-			{
-				var sessions = App.Server.WebSocketService.GetSessionsForEndpoint(endpoint);
-                foreach (var session in sessions)
-                {
-					WebControlConnectionsPanel.Children.Add(new Label() { Content = $"{endpoint} : {session}" });
-				}
-            }
+			ViewModel.InitializeViewModel();
 		}
-	}
+    }
 }

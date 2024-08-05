@@ -45,6 +45,8 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		{
 			if (App.Server == null)
 				return;
+			if (!App.Server.IsRunning)
+				return;
 
 			if (App.Server.IsRunning)
 				App.Server.Stop();

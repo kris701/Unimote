@@ -12,6 +12,7 @@ namespace Unimote.Server.WPF.Views.Windows
 		public MainWindow(
 			MainWindowViewModel viewModel,
 			IPageService pageService,
+			ISnackbarService snackbarService,
 			INavigationService navigationService
 		)
 		{
@@ -26,6 +27,8 @@ namespace Unimote.Server.WPF.Views.Windows
 			navigationService.SetNavigationControl(RootNavigation);
 
 			NotifyIcon.Menu!.DataContext = this;
+
+			snackbarService.SetSnackbarPresenter(SnackbarPresenter);
 		}
 
 		#region INavigationWindow methods
