@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:models="clr-namespace:Unimote.Server.API.Models.RemoteConfigurations;assembly=Unimote.Server.API"
+    xmlns:apiDef="clr-namespace:Unimote.Server.API;assembly=Unimote.Server.API"
     xmlns:helpers="clr-namespace:Unimote.Server.WPF.Helpers"
     Title="ConfigurationsPage"
     d:DataContext="{d:DesignInstance local:ConfigurationsPage,
@@ -43,6 +44,7 @@
                     <ContextMenu.ItemTemplate>
                         <DataTemplate>
                             <ui:MenuItem 
+                                Margin="-10"
                                 Header="{Binding Name}"
                                 Command="{Binding ViewModel.SelectConfigurationCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ConfigurationsPage}}}"
                                 CommandParameter="{Binding ID}"/>
@@ -60,7 +62,6 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -69,10 +70,94 @@
                 </Grid.ColumnDefinitions>
 
                 <ui:Button Grid.Row="1" Margin="5" Content="Delete Configuration" Appearance="Danger" HorizontalAlignment="Stretch" Command="{Binding ViewModel.DeleteConfigurationCommand}" />
-                <ui:Button Grid.Row="2" Margin="5" Content="New Remote Button" Appearance="Info" HorizontalAlignment="Stretch" Command="{Binding ViewModel.AddNewButtonCommand}" />
+
+                <ui:DropDownButton Grid.Row="2" Margin="5" Content="New Remote Button" Appearance="Info" HorizontalAlignment="Stretch">
+                    <ui:DropDownButton.Flyout>
+                        <ContextMenu ItemsSource="{Binding Source={x:Static apiDef:APIDefinition.Endpoints}}">
+                            <ContextMenu.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40"/>
+                                            <ColumnDefinition Width="60"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <ui:TextBlock
+                                            Margin="2"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            Text="{Binding Endpoint.EndpointType}"
+                                            Appearance="Tertiary"
+                                            FontWeight="Bold">
+                                        </ui:TextBlock>
+
+                                        <ui:TextBlock
+                                            Grid.Column="1"
+                                            Margin="2"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            Text="{Binding Endpoint.Category}">
+                                            <ui:TextBlock.ToolTip>
+                                                Category
+                                            </ui:TextBlock.ToolTip>
+                                        </ui:TextBlock>
+
+                                        <ui:TextBlock
+                                            Grid.Column="2"
+                                            Margin="2"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            Text="{Binding Endpoint.Endpoint}"/>
+
+                                        <ui:MenuItem 
+                                            Grid.ColumnSpan="3"
+                                            Margin="-10"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Command="{Binding ViewModel.AddNewButtonCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ConfigurationsPage}}}"
+                                            CommandParameter="{Binding}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ContextMenu.ItemTemplate>
+                        </ContextMenu>
+                    </ui:DropDownButton.Flyout>
+                </ui:DropDownButton>
 
                 <ui:TextBox Grid.ColumnSpan="2" Margin="5" Text="{Binding ViewModel.Configuration.Name, Mode=TwoWay}"/>
-                <ui:TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Margin="5" Text="{Binding ViewModel.Configuration.Description, Mode=TwoWay}"/>
+                <ui:TextBox Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="5" Text="{Binding ViewModel.Configuration.Description, Mode=TwoWay}"/>
+
+                <ui:ListView Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding ViewModel.Configuration.Buttons}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type models:ButtonConfiguration}">
+                            <Grid Margin="8,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45" />
+                                    <RowDefinition Height="200" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <ui:Button
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Margin="5"
+                                    Content="Delete"
+                                    Appearance="Danger"/>
+
+                                <ui:DropDownButton
+                                    
+                                    />
+
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ui:ListView>
             </Grid>
         </ui:PassiveScrollViewer>
     </Grid>
