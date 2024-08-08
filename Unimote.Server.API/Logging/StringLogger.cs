@@ -1,4 +1,6 @@
-﻿namespace Unimote.Server.API.Logging
+﻿using Microsoft.Extensions.Logging;
+
+namespace Unimote.Server.API.Logging
 {
 	public class StringLogger : ILogger
 	{

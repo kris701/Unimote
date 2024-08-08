@@ -1,6 +1,7 @@
 using InputSimulatorStandard;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Unimote.Server.API.Models.Database;
 using Unimote.Server.API.Models.DirectInput;
 using Unimote.Server.API.Models.Settings;
