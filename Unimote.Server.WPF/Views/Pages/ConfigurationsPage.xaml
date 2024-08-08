@@ -38,7 +38,7 @@
 
         <ui:Button Content="New" Margin="10,0,0,0" Appearance="Primary" HorizontalAlignment="Stretch" Command="{Binding ViewModel.AddConfigurationCommand}" />
         <ui:Button Grid.Column="1" Margin="10,0,0,0" Content="Save" Appearance="Primary" HorizontalAlignment="Stretch" Command="{Binding ViewModel.SaveConfigurationsCommand}" />
-        <ui:DropDownButton Grid.Column="2" Content="Select Configuration" Margin="10,0,0,0">
+        <ui:DropDownButton Grid.Column="2" Content="{Binding ViewModel.Configuration.Name}" Margin="10,0,0,0">
             <ui:DropDownButton.Flyout>
                 <ContextMenu ItemsSource="{Binding ViewModel.Configurations}">
                     <ContextMenu.ItemTemplate>
@@ -133,24 +133,87 @@
                             <Grid Margin="8,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="45" />
-                                    <RowDefinition Height="200" />
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="150"/>
                                     <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="200"/>
                                     <ColumnDefinition/>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="100"/>
                                 </Grid.ColumnDefinitions>
 
                                 <ui:Button
-                                    Grid.Column="1"
+                                    Grid.Column="0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Margin="5"
                                     Content="Delete"
-                                    Appearance="Danger"/>
+                                    Appearance="Danger"
+                                    Command="{Binding ViewModel.DeleteEndpointCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ConfigurationsPage}}}"
+                                    CommandParameter="{Binding ButtonID}"/>
+
+                                <ui:TextBlock
+                                    Grid.Column="1"
+                                    Margin="2"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Text="Bind to button:"/>
 
                                 <ui:DropDownButton
-                                    
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Content="{Binding ButtonName}"
+                                    Margin="5">
+                                    <ui:DropDownButton.Flyout>
+                                        <ContextMenu ItemsSource="{Binding Source={x:Static apiDef:ButtonsDefinition.Buttons}}">
+                                            <ContextMenu.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ui:MenuItem 
+                                                        Margin="-10"
+                                                        Header="{Binding Name}"
+                                                        Command="{Binding ViewModel.ButtonSelectedForEndpointCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ConfigurationsPage}}}"
+                                                        CommandParameter="{Binding ID}"/>
+                                                </DataTemplate>
+                                            </ContextMenu.ItemTemplate>
+                                        </ContextMenu>
+                                    </ui:DropDownButton.Flyout>
+                                </ui:DropDownButton>
+                                
+                                <ui:TextBlock
+                                    Grid.Column="4"
+                                    Margin="2"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Text="{Binding TargetEndpoint.EndpointType}"
+                                    Appearance="Tertiary"
+                                    FontWeight="Bold"/>
+
+                                <ui:TextBlock
+                                    Grid.Column="5"
+                                    Margin="2"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Text="{Binding TargetEndpoint.Category}"/>
+
+                                <ui:TextBlock
+                                    Grid.Column="6"
+                                    Margin="2"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Text="{Binding TargetEndpoint.Endpoint}"/>
+
+                                <ui:TextBox
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="7"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Margin="5" AcceptsReturn="True"
+                                    AcceptsTab="True"
+                                    Text="{Binding Body, Mode=TwoWay}"
                                     />
 
 

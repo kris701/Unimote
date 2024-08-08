@@ -9,12 +9,12 @@ namespace Unimote.Server.API
 		public class EndpointDefinition
 		{
 			public HttpEndpoint Endpoint { get; set; }
-			public List<PropertyInfo> Properties { get; set; }
+			public object Model { get; set; }
 
-			public EndpointDefinition(HttpEndpoint endpoint, List<PropertyInfo> properties)
+			public EndpointDefinition(HttpEndpoint endpoint, object model)
 			{
 				Endpoint = endpoint;
-				Properties = properties;
+				Model = model;
 			}
 		}
 
@@ -22,16 +22,16 @@ namespace Unimote.Server.API
 		{
 			new EndpointDefinition(
 				new HttpEndpoint("direct", "mouse/move", HttpEndpoint.EndpointTypes.POST), 
-				typeof(MouseMoveInput).GetProperties().ToList()),
+				new MouseMoveInput(){ X = 0, Y = 0 }),
 			new EndpointDefinition(
 				new HttpEndpoint("direct", "mouse/click", HttpEndpoint.EndpointTypes.POST),
-				typeof(MouseClickInput).GetProperties().ToList()),
+				new MouseClickInput() { Button = MouseClickInput.ButtonTypes.Left }),
 			new EndpointDefinition(
 				new HttpEndpoint("direct", "keyboard/press", HttpEndpoint.EndpointTypes.POST),
-				typeof(KeyboardPressInput).GetProperties().ToList()),
+				new KeyboardPressInput() { KeyCode = InputSimulatorStandard.Native.VirtualKeyCode.SPACE }),
 			new EndpointDefinition(
 				new HttpEndpoint("direct", "keyboard/text", HttpEndpoint.EndpointTypes.POST),
-				typeof(KeyboardTextInput).GetProperties().ToList()),
+				new KeyboardTextInput() { Text = "Sample Text" }),
 		};
 	}
 }

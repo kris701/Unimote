@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Unimote.Server.API;
 using Unimote.Server.API.Helpers;
 using Unimote.Server.API.Models.RemoteConfigurations;
 using Unimote.Server.API.Models.Users;
@@ -31,7 +33,14 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 
 			if (App.Server.Database.RemoteConfigurations.Count == 0)
 			{
-				OnAddConfiguration();
+				Configuration = new RemoteConfiguration(
+					Guid.NewGuid(),
+					"New Configuration",
+					"Description",
+					new List<ButtonConfiguration>());
+				Configurations = new List<RemoteConfiguration>() {
+					Configuration
+				};
 				App.Server.Database.RemoteConfigurations = new List<RemoteConfiguration>(Configurations);
 			}
 			Configuration = App.Server.Database.RemoteConfigurations.First();
@@ -118,6 +127,26 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		{
 			if (Configuration.Buttons == null)
 				return;
+
+			Configuration.Buttons.Add(new ButtonConfiguration(ButtonsDefinition.Buttons.First().ID, def.Endpoint, JsonSerializer.Serialize(def.Model, new JsonSerializerOptions() { WriteIndented = true })));
+		}
+
+		[RelayCommand]
+		private void OnDeleteEndpoint(Guid id)
+		{
+			if (Configuration.Buttons == null)
+				return;
+
+			Configuration.Buttons.RemoveAll(x => x.ButtonID == id);
+		}
+
+		[RelayCommand]
+		private void OnButtonSelectedForEndpoint(Guid buttonID)
+		{
+			if (Configuration.Buttons == null)
+				return;
+
+			
 		}
 	}
 }
