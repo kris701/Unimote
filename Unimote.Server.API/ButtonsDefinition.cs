@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Unimote.Server.API.APIDefinition;
-using Unimote.Server.API.Models.DirectInput;
-using Unimote.Server.API.Models.RemoteConfigurations;
-
-namespace Unimote.Server.API
+﻿namespace Unimote.Server.API
 {
 	public static class ButtonsDefinition
 	{

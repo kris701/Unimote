@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using Unimote.Server.WPF.ViewModels.Pages;
+﻿using Unimote.Server.WPF.ViewModels.Pages;
 using Wpf.Ui.Controls;
 
 namespace Unimote.Server.WPF.Views.Pages
@@ -25,5 +24,5 @@ namespace Unimote.Server.WPF.Views.Pages
 		{
 			ViewModel.InitializeViewModel();
 		}
-    }
+	}
 }

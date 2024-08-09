@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Unimote.Server.API.Models.DirectInput;
+﻿using Unimote.Server.API.Models.DirectInput;
 using Unimote.Server.API.Models.RemoteConfigurations;
 
 namespace Unimote.Server.API
@@ -21,7 +20,7 @@ namespace Unimote.Server.API
 		public static IEnumerable<EndpointDefinition> Endpoints { get; } = new List<EndpointDefinition>()
 		{
 			new EndpointDefinition(
-				new HttpEndpoint("direct", "mouse/move", HttpEndpoint.EndpointTypes.POST), 
+				new HttpEndpoint("direct", "mouse/move", HttpEndpoint.EndpointTypes.POST),
 				new MouseMoveInput(){ X = 0, Y = 0 }),
 			new EndpointDefinition(
 				new HttpEndpoint("direct", "mouse/click", HttpEndpoint.EndpointTypes.POST),

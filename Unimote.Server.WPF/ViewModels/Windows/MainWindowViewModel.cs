@@ -12,7 +12,8 @@ namespace Unimote.Server.WPF.ViewModels.Windows
 		{
 			_startServerCommand = new DelegateCommand
 			{
-				CommandAction = () => {
+				CommandAction = () =>
+				{
 					App.Server.Start();
 					snackbarService.Show(
 						"Starting Started!",
@@ -26,7 +27,8 @@ namespace Unimote.Server.WPF.ViewModels.Windows
 			};
 			_stopServerCommand = new DelegateCommand
 			{
-				CommandAction = () => {
+				CommandAction = () =>
+				{
 					App.Server.Stop();
 					snackbarService.Show(
 						"Starting Stopped!",

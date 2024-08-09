@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Unimote.Server.WPF.ViewModels.Pages
+﻿namespace Unimote.Server.WPF.ViewModels.Pages
 {
 	public abstract partial class BaseLoadingPage : ObservableObject
 	{

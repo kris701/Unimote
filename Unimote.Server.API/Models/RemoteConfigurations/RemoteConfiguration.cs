@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Unimote.Server.API.Helpers;
 
 namespace Unimote.Server.API.Models.RemoteConfigurations
 {

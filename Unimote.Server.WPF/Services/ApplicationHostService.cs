@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Unimote.Server.WPF.Views.Pages;
+﻿using Microsoft.Extensions.Hosting;
 using Unimote.Server.WPF.Views.Windows;
 using Wpf.Ui;
 

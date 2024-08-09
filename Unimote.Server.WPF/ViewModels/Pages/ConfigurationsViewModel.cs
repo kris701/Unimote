@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Text.Json;
 using Unimote.Server.API;
-using Unimote.Server.API.Helpers;
 using Unimote.Server.API.Models.RemoteConfigurations;
-using Unimote.Server.API.Models.Users;
 using Unimote.Server.WPF.Helpers;
 using Wpf.Ui.Controls;
 using static Unimote.Server.API.APIDefinition;
@@ -109,8 +99,8 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 				config.Buttons.Add(
 					new ButtonConfiguration(
 						Guid.NewGuid(),
-						ButtonsDefinition.Buttons.First().ID, 
-						def.Endpoint, 
+						ButtonsDefinition.Buttons.First().ID,
+						def.Endpoint,
 						JsonSerializer.Serialize(def.Model, new JsonSerializerOptions() { WriteIndented = true })));
 				Configuration = config;
 				Configurations.Insert(0, Configuration);

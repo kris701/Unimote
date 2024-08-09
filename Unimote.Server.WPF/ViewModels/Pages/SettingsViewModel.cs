@@ -1,5 +1,4 @@
-﻿using Unimote.Server.API.Models.Database;
-using Unimote.Server.API.Models.Settings;
+﻿using Unimote.Server.API.Models.Settings;
 using Unimote.Server.WPF.Helpers;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;

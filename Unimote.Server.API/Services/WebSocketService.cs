@@ -18,7 +18,7 @@ namespace Unimote.Server.API.Services
 			if (settings.EnableWebControl)
 			{
 				_socketServer = new WebSocketServer($"ws://localhost:{Port}");
-				foreach(var endpoint in Endpoints)
+				foreach (var endpoint in Endpoints)
 					_socketServer.AddWebSocketService<WebSocketBehaviourService>(endpoint);
 				_socketServer.Start();
 			}

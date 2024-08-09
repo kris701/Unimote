@@ -1,13 +1,9 @@
-﻿using System.Text.RegularExpressions;
-using System.Windows.Input;
-using System.Windows.Media;
-using Unimote.Server.API.Models.Database;
+﻿using System.Windows.Input;
 using Unimote.Server.API.Models.Settings;
 using Unimote.Server.WPF.Helpers;
 using Unimote.Server.WPF.Models;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Unimote.Server.WPF.ViewModels.Pages
 {
@@ -17,7 +13,8 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		{
 			_startServerCommand = new DelegateCommand
 			{
-				CommandAction = () => {
+				CommandAction = () =>
+				{
 					App.Server.Start();
 					snackbarService.Show(
 						"Starting Started!",
@@ -31,7 +28,8 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 			};
 			_stopServerCommand = new DelegateCommand
 			{
-				CommandAction = () => {
+				CommandAction = () =>
+				{
 					App.Server.Stop();
 					snackbarService.Show(
 						"Starting Stopped!",
@@ -63,7 +61,7 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 
 			var statItems = new List<StatsItem>();
 			var props = App.Server.Database.Statistics.GetType().GetProperties();
-			foreach(var prop in props)
+			foreach (var prop in props)
 			{
 				var name = StringHelpers.ToSentenceCase(prop.Name);
 				var value = prop.GetValue(App.Server.Database.Statistics, null);

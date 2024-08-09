@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Unimote.Client.App
+namespace Unimote.Client.App.Platforms.iOS
 {
 	[Register("AppDelegate")]
 	public class AppDelegate : MauiUIApplicationDelegate

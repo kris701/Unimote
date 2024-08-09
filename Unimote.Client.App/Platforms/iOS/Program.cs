@@ -1,7 +1,6 @@
-﻿using ObjCRuntime;
-using UIKit;
+﻿using UIKit;
 
-namespace Unimote.Client.App
+namespace Unimote.Client.App.Platforms.iOS
 {
 	public class Program
 	{

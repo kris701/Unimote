@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unimote.Server.API.Helpers;
-using Unimote.Server.API.Models.Database;
-using Unimote.Server.API.Models.Settings;
+﻿using Unimote.Server.API.Helpers;
 using Unimote.Server.API.Models.Users;
 using Unimote.Server.WPF.Helpers;
-using Unimote.Server.WPF.Models;
 using Wpf.Ui.Controls;
 
 namespace Unimote.Server.WPF.ViewModels.Pages

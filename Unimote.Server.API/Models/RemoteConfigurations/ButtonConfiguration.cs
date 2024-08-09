@@ -10,7 +10,8 @@ namespace Unimote.Server.API.Models.RemoteConfigurations
 
 		private Guid? _buttonID = null;
 		[Required]
-		public Guid? ButtonID { 
+		public Guid? ButtonID
+		{
 			get => _buttonID;
 			set
 			{
