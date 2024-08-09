@@ -14,7 +14,7 @@ using Wpf.Ui.Controls;
 
 namespace Unimote.Server.WPF.ViewModels.Pages
 {
-	public partial class UsersViewModel : ObservableObject, INavigationAware
+	public partial class UsersViewModel : BaseLoadingPage, INavigationAware
 	{
 		public void OnNavigatedTo() => InitializeViewModel();
 
@@ -32,16 +32,18 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		}
 
 		[ObservableProperty]
-		private IEnumerable<UserModel> _users;
+		private List<UserModel> _users;
 
 		[RelayCommand]
-		private void OnAddUser()
+		private async Task OnAddUser()
 		{
+			await LoadingStart();
 			if (App.Server == null)
 				return;
 
 			var tmp = Users.ToList();
 			var newUser = new UserModel(
+				Guid.NewGuid(),
 				"New User",
 				"password",
 				new List<AllowedSection>(App.Server.Database.Sections));
@@ -49,25 +51,30 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 				section.IsAllowed = false;
 			tmp.Add(newUser);
 			Users = tmp;
+			LoadingStop();
 		}
 
 		[RelayCommand]
-		private void OnSaveUsers()
+		private async Task OnSaveUsers()
 		{
+			await LoadingStart();
 			App.Server.Database.Users = new List<UserModel>(Users);
 			ServerHelper.RestartServer();
+			LoadingStop();
 		}
 
 		[RelayCommand]
-		private void OnDeleteUser(string user)
+		private async Task OnDeleteUser(Guid userID)
 		{
-			var toRemove = Users.SingleOrDefault(x => x.UserName == user);
+			await LoadingStart();
+			var toRemove = Users.SingleOrDefault(x => x.ID == userID);
 			if (toRemove != null)
 			{
 				var tmp = Users.ToList();
 				tmp.Remove(toRemove);
 				Users = tmp;
 			}
+			LoadingStop();
 		}
 	}
 }

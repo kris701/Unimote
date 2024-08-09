@@ -21,7 +21,7 @@ namespace Unimote.Server.API.Models.Database
 				new AllowedSection("WebControl", true),
 			};
 			Users = new List<UserModel>() {
-				new UserModel("admin", "password", new List<AllowedSection>(Sections))
+				new UserModel(Guid.NewGuid(), "admin", "password", new List<AllowedSection>(Sections))
 			};
 			RemoteConfigurations = new List<RemoteConfiguration>();
 			Statistics = new StatisticModel();

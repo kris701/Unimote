@@ -8,7 +8,7 @@ namespace Unimote.Server.API.Helpers
 {
 	public static class ListHelpers
 	{
-		public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
+		public static List<T> Clone<T>(this List<T> listToClone) where T : ICloneable
 		{
 			return listToClone.Select(item => (T)item.Clone()).ToList();
 		}

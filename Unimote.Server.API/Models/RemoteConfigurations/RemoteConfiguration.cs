@@ -17,10 +17,11 @@ namespace Unimote.Server.API.Models.RemoteConfigurations
 		{
 			if (Buttons == null)
 				throw new ArgumentNullException();
-			var tmp = Buttons.Clone();
-			if (tmp is List<ButtonConfiguration> buttons)
-				return new RemoteConfiguration(ID, Name, Description, buttons);
-			throw new Exception("Could not clone!");
+			var tmp = new List<ButtonConfiguration>();
+			foreach (var button in Buttons)
+				if (button.Clone() is ButtonConfiguration but)
+					tmp.Add(but);
+			return new RemoteConfiguration(ID, Name, Description, tmp);
 		}
 	}
 }

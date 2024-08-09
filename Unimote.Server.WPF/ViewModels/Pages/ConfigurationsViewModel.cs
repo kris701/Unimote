@@ -17,7 +17,7 @@ using static Unimote.Server.API.APIDefinition;
 
 namespace Unimote.Server.WPF.ViewModels.Pages
 {
-	public partial class ConfigurationsViewModel : ObservableObject, INavigationAware
+	public partial class ConfigurationsViewModel : BaseLoadingPage, INavigationAware
 	{
 		public void OnNavigatedTo() => InitializeViewModel();
 
@@ -25,11 +25,9 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 
 		internal void InitializeViewModel()
 		{
+			Configurations = new List<RemoteConfiguration>();
 			if (App.Server == null)
-			{
-				Configurations = new List<RemoteConfiguration>();
 				return;
-			}
 
 			if (App.Server.Database.RemoteConfigurations.Count == 0)
 			{
@@ -43,24 +41,17 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 				};
 				App.Server.Database.RemoteConfigurations = new List<RemoteConfiguration>(Configurations);
 			}
-			Configuration = App.Server.Database.RemoteConfigurations.First();
-			Configurations = App.Server.Database.RemoteConfigurations.Clone();
+			foreach (var config in App.Server.Database.RemoteConfigurations)
+				if (config.Clone() is RemoteConfiguration rconfig)
+					Configurations.Add(rconfig);
+			Configuration = Configurations.First();
 		}
 
 		[ObservableProperty]
-		private IEnumerable<RemoteConfiguration> _configurations;
+		private List<RemoteConfiguration> _configurations;
 
 		[ObservableProperty]
 		private RemoteConfiguration _configuration;
-
-		[ObservableProperty]
-		private double _loadingOpacity = 0.5;
-
-		[ObservableProperty]
-		private bool _isLoading = false;
-
-		[ObservableProperty]
-		private bool _isLoaded = true;
 
 		[RelayCommand]
 		private async Task OnSelectConfiguration(Guid iD)
@@ -70,31 +61,16 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 			LoadingStop();
 		}
 
-		private async Task LoadingStart()
-		{
-			IsLoading = true;
-			IsLoaded = false;
-			await Task.Delay(100);
-		}
-
-		private void LoadingStop()
-		{
-			IsLoading = false;
-			IsLoaded = true;
-		}
-
 		[RelayCommand]
 		private async Task OnAddConfiguration()
 		{
 			await LoadingStart();
-			var tmp = Configurations.ToList();
 			Configuration = new RemoteConfiguration(
 				Guid.NewGuid(),
 				"New Configuration",
 				"Description",
 				new List<ButtonConfiguration>());
-			tmp.Add(Configuration);
-			Configurations = tmp;
+			Configurations.Insert(0, Configuration);
 			LoadingStop();
 		}
 
@@ -111,9 +87,7 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 		private async Task OnDeleteConfiguration()
 		{
 			await LoadingStart();
-			var tmp = Configurations.ToList();
-			tmp.Remove(Configuration);
-			Configurations = tmp;
+			Configurations.Remove(Configuration);
 
 			if (Configurations.Count() == 0)
 				await OnAddConfiguration();
@@ -128,25 +102,59 @@ namespace Unimote.Server.WPF.ViewModels.Pages
 			if (Configuration.Buttons == null)
 				return;
 
-			Configuration.Buttons.Add(new ButtonConfiguration(ButtonsDefinition.Buttons.First().ID, def.Endpoint, JsonSerializer.Serialize(def.Model, new JsonSerializerOptions() { WriteIndented = true })));
+			var cpy = Configuration.Clone();
+			if (cpy is RemoteConfiguration config)
+			{
+				Configurations.Remove(Configuration);
+				config.Buttons.Add(
+					new ButtonConfiguration(
+						Guid.NewGuid(),
+						ButtonsDefinition.Buttons.First().ID, 
+						def.Endpoint, 
+						JsonSerializer.Serialize(def.Model, new JsonSerializerOptions() { WriteIndented = true })));
+				Configuration = config;
+				Configurations.Insert(0, Configuration);
+			}
 		}
 
 		[RelayCommand]
-		private void OnDeleteEndpoint(Guid id)
+		private void OnDeleteEndpoint(Guid? id)
 		{
 			if (Configuration.Buttons == null)
 				return;
 
-			Configuration.Buttons.RemoveAll(x => x.ButtonID == id);
+			var cpy = Configuration.Clone();
+			if (cpy is RemoteConfiguration config)
+			{
+				Configurations.Remove(Configuration);
+				config.Buttons.RemoveAll(x => x.ID == id);
+				Configuration = config;
+				Configurations.Insert(0, Configuration);
+			}
 		}
 
 		[RelayCommand]
-		private void OnButtonSelectedForEndpoint(Guid buttonID)
+		private void OnButtonSelectedForEndpoint(object objs)
 		{
 			if (Configuration.Buttons == null)
 				return;
 
-			
+			if (objs is object[] ids && ids.Length == 2)
+			{
+				var buttonID = new Guid($"{ids[0]}");
+				var configID = new Guid($"{ids[1]}");
+
+				var cpy = Configuration.Clone();
+				if (cpy is RemoteConfiguration config)
+				{
+					Configurations.Remove(Configuration);
+					var target = config.Buttons.SingleOrDefault(x => x.ID == configID);
+					if (target is ButtonConfiguration button)
+						button.ButtonID = buttonID;
+					Configuration = config;
+					Configurations.Insert(0, Configuration);
+				}
+			}
 		}
 	}
 }
